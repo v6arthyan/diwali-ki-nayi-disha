@@ -1,1 +1,1 @@
-# v6-diwali-sip-enquiry
+# v6-diwali-sip
