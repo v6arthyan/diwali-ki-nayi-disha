@@ -119,7 +119,6 @@ button:disabled{opacity:.65;cursor:wait}
       <p class="disclaimer">Mutual Fund investments are subject to market risks, read all scheme related documents carefully.</p>
     </footer>
   </main>
-  <div class="preview-tag">PREVIEW • NOT CONNECTED</div>
 </div>
 <script>
 /*
@@ -127,7 +126,7 @@ button:disabled{opacity:.65;cursor:wait}
   After the endpoint is configured and the integration is tested, replace
   the empty ENDPOINT value and implement a confirmed-save response flow.
 */
-const ENDPOINT = "";
+const ENDPOINT = "https://script.google.com/macros/s/AKfycbzD7J3VvoPhD7lvcZvRcSUbfw_-spkAHhqVUOB-Di3DQkDE-FDC42wu5oDmE1Zjw8m1aw/exec";
 const form = document.getElementById("enquiry-form");
 const statusBox = document.getElementById("status");
 const submitBtn = document.getElementById("submit-btn");
@@ -135,18 +134,70 @@ function showStatus(message, type) {
   statusBox.textContent = message;
   statusBox.className = "status show " + type;
 }
+
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
+
   const name = document.getElementById("name").value.trim();
-  const mobile = document.getElementById("mobile").value.replace(/\s|-/g, "");
+  const mobile = document.getElementById("mobile").value.replace(/[\s-]/g, "");
   const amount = Number(new FormData(form).get("amount"));
   const consent = document.getElementById("consent").checked;
-  if (!name || name.length > 100) return showStatus("Please enter your name (up to 100 characters).", "error");
-  if (!/^[6-9]\d{9}$/.test(mobile)) return showStatus("Please enter a valid 10-digit Indian mobile number.", "error");
-  if (![1000,2000,5000,10000].includes(amount)) return showStatus("Please choose one of the listed monthly amounts.", "error");
-  if (!consent) return showStatus("Please provide consent before submitting.", "error");
-  if (!ENDPOINT) return showStatus("Preview only: Google Sheets is not connected to this website yet. No enquiry has been sent or saved.", "error");
-  showStatus("Submission connection is not yet verified. No success confirmation will be shown until the server confirms the save.", "error");
+
+  if (!name || name.length > 100)
+    return showStatus("Please enter your name (up to 100 characters).", "error");
+
+  if (!/^[6-9]\d{9}$/.test(mobile))
+    return showStatus("Please enter a valid 10-digit Indian mobile number.", "error");
+
+  if (![1000, 2000, 5000, 10000].includes(amount))
+    return showStatus("Please choose one of the listed monthly amounts.", "error");
+
+  if (!consent)
+    return showStatus("Please provide consent before submitting.", "error");
+
+  submitBtn.disabled = true;
+  submitBtn.textContent = "Submitting…";
+  showStatus("Sending your enquiry…", "info");
+
+  try {
+    const response = await fetch(ENDPOINT, {
+      method: "POST",
+      headers: {
+        "Content-Type": "text/plain;charset=utf-8"
+      },
+      body: JSON.stringify({
+        name: name,
+        mobile: mobile,
+        amount: amount,
+        consent: consent
+      }),
+      redirect: "follow"
+    });
+
+    if (!response.ok) {
+      throw new Error("The server returned HTTP " + response.status);
+    }
+
+    const result = await response.json();
+
+    if (result.success !== true) {
+      throw new Error(result.message || "The enquiry could not be saved.");
+    }
+
+    showStatus("Thank you! Your enquiry has been saved successfully.", "success");
+    form.reset();
+
+  } catch (error) {
+    console.error("Enquiry submission failed:", error);
+    showStatus(
+      "We couldn't confirm that your enquiry was saved. Please try again later or contact our team.",
+      "error"
+    );
+
+  } finally {
+    submitBtn.disabled = false;
+    submitBtn.textContent = "Submit Enquiry";
+  }
 });
 </script>
 </body>
