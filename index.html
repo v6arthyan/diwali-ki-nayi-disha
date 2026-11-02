@@ -61,12 +61,19 @@
 h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(31px,5.4vw,57px);line-height:1.12;font-weight:500;max-width:820px;margin:15px auto 14px;text-wrap:balance}
 h1 em{font-style:normal;color:var(--gold2)}
 .lede{max-width:610px;margin:0 auto;color:#e7dfd0;font-size:15px;line-height:1.75}
-.festive-art{height:132px;max-width:650px;margin:18px auto 0;position:relative;display:flex;justify-content:center;align-items:end;gap:22px}
-.lamp{position:relative;width:104px;height:45px;background:linear-gradient(#f8d98b,#b87b27 65%,#7e4619);border-radius:0 0 60px 60px/0 0 45px 45px;box-shadow:0 0 34px #f4b84e44;clip-path:polygon(0 0,100% 0,82% 72%,50% 100%,18% 72%)}
-.lamp:before{content:"";position:absolute;top:-26px;left:42px;width:20px;height:31px;border-radius:80% 10% 70% 20%;transform:rotate(12deg);background:radial-gradient(ellipse at 35% 70%,#fff8be 0%,#ffd05a 35%,#ed6b1b 72%,transparent 75%);filter:drop-shadow(0 0 11px #ffc54d)}
-.lamp:after{content:"";position:absolute;top:3px;left:8px;right:8px;height:2px;background:#fff0b6;border-radius:100%}
-.lamp.small{transform:scale(.72);transform-origin:bottom;opacity:.88}.coins{position:absolute;bottom:0;left:calc(50% - 174px);color:var(--gold2);font-size:25px;text-shadow:0 0 12px #e6b94e66}.coins.right{left:auto;right:calc(50% - 174px)}
-.petals{position:absolute;top:8px;color:#f2a34e;font-size:19px;letter-spacing:8px}
+.festive-art{height:176px;max-width:650px;margin:14px auto 0;position:relative;display:flex;justify-content:center;align-items:flex-end;gap:12px;isolation:isolate}
+.festive-art:before{content:"";position:absolute;width:85%;height:110px;bottom:-12px;left:7.5%;background:radial-gradient(ellipse,#f8a33235 0%,#e97a2612 42%,transparent 72%);filter:blur(15px);pointer-events:none}
+.diya{width:150px;height:156px;overflow:visible;filter:drop-shadow(0 12px 11px #050c16aa)}
+.diya.main{width:185px;height:176px;z-index:2}
+.diya.side{width:126px;height:139px;opacity:.95;z-index:1}
+.diya .flame-outer{transform-box:fill-box;transform-origin:50% 90%;animation:diya-flicker 2.15s ease-in-out infinite alternate}
+.diya .flame-inner{transform-box:fill-box;transform-origin:50% 90%;animation:diya-flicker 1.65s ease-in-out infinite alternate-reverse}
+.diya .flame-halo{animation:diya-pulse 2.7s ease-in-out infinite alternate}
+.diya.side.left .flame-outer{animation-delay:-.8s}.diya.side.right .flame-outer{animation-delay:-1.5s}
+.diya .light-reflection{animation:diya-pulse 2.7s ease-in-out infinite alternate}
+@keyframes diya-flicker{0%{transform:rotate(-3deg) scale(.96,1.02)}45%{transform:rotate(2deg) scale(1.03,.98)}100%{transform:rotate(4deg) scale(.95,1.06)}}
+@keyframes diya-pulse{from{opacity:.55}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.diya .flame-outer,.diya .flame-inner,.diya .flame-halo,.diya .light-reflection{animation:none!important}}
 .grid{display:grid;grid-template-columns:1fr .92fr;gap:24px;align-items:start;max-width:930px;margin:0 auto}
 .info-card{border:1px solid #d6ac5866;border-radius:22px;padding:25px;background:linear-gradient(145deg,#243951,#14263b);color:var(--beige);box-shadow:0 18px 50px #050b13aa}
 .info-card h2{font:500 25px/1.2 Georgia,serif;margin:0 0 9px;color:var(--gold2)}
@@ -80,7 +87,7 @@ h1 em{font-style:normal;color:var(--gold2)}
 .form-card h2{text-align:center;font:500 27px/1.2 Georgia,serif;color:var(--navy);margin:9px 0 7px}
 .form-intro{text-align:center;font-size:12px;line-height:1.6;color:#756b5e;margin:0 0 17px}
 .field-label{display:block;font-size:12px;font-weight:750;color:#41382d;margin:15px 0 7px}
-input[type=text],input[type=tel]{width:100%;height:47px;border:1px solid #d7c8ad;border-radius:10px;padding:0 13px;background:#fffdf8;color:#241f19;font:inherit;font-size:14px;outline:none}
+input[type=text],input[type=tel],input[type=number]{width:100%;height:47px;border:1px solid #d7c8ad;border-radius:10px;padding:0 13px;background:#fffdf8;color:#241f19;font:inherit;font-size:14px;outline:none}
 input:focus{border-color:var(--orange);box-shadow:0 0 0 3px #e97a2620}
 .amounts{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .form-details[hidden]{display:none!important}
@@ -89,6 +96,12 @@ input:focus{border-color:var(--orange);box-shadow:0 0 0 3px #e97a2620}
 .amount input{position:absolute;opacity:0;pointer-events:none}
 .amount span{display:flex;align-items:center;justify-content:center;min-height:44px;border:1px solid #d5c4a5;border-radius:10px;background:#fffaf0;color:#45392a;font-size:14px;font-weight:800;transition:.15s}
 .amount input:checked+span{background:var(--navy);color:var(--gold2);border-color:var(--gold);box-shadow:inset 0 0 0 1px var(--gold)}
+.custom-amount-option{grid-column:1/-1}
+.custom-amount-wrap{margin-top:10px;padding:13px;border:1px solid #d6ac58;border-radius:11px;background:#fff9ec}
+.custom-amount-wrap[hidden]{display:none!important}
+.custom-amount-wrap input{width:100%;height:47px;border:1px solid #d7c8ad;border-radius:10px;padding:0 13px;background:#fffdf8;color:#241f19;font:inherit;font-size:14px;outline:none}
+.custom-hint{display:block;margin-top:6px;color:#756b5e;font-size:11px}
+.amount input:focus-visible+span{outline:3px solid #e97a2677;outline-offset:2px}
 .consent{display:flex;gap:9px;align-items:flex-start;margin:16px 0 14px;font-size:11px;line-height:1.55;color:#554b3e}
 .consent input{accent-color:var(--orange);margin-top:2px;flex:0 0 auto}
 button{width:100%;border:0;border-radius:11px;min-height:49px;background:linear-gradient(100deg,#c86a1d,var(--orange),#f3a04d);color:white;font-size:14px;font-weight:850;letter-spacing:.02em;cursor:pointer;box-shadow:0 8px 18px #b85d1b33}
@@ -99,8 +112,8 @@ button:disabled{opacity:.65;cursor:wait}
 .footer strong{display:block;letter-spacing:.16em;color:var(--gold2);font-size:12px}
 .disclaimer{max-width:730px;margin:9px auto 0;color:#bdb5a7;font-size:10px}
 .preview-tag{position:fixed;z-index:4;right:12px;bottom:12px;border:1px solid #d6ac5877;border-radius:999px;background:#101e30ee;color:#f7dda0;padding:7px 11px;font-size:10px;letter-spacing:.08em}
-@media(max-width:760px){.wrap{padding:20px 14px 26px}.hero{padding:24px 0 18px}.festive-art{height:100px;gap:8px}.lamp{width:83px;height:37px}.lamp:before{left:33px}.grid{grid-template-columns:1fr;gap:16px;max-width:470px}.info-card{order:2;padding:20px}.form-card{order:1;padding:21px}.footer{margin-top:22px}.o3,.o4{display:none}.coins{left:calc(50% - 135px)}.coins.right{right:calc(50% - 135px)}}
-@media(prefers-reduced-motion:no-preference){.lamp:before{animation:flicker 2.3s infinite alternate ease-in-out}@keyframes flicker{from{transform:rotate(12deg) scale(.94);filter:drop-shadow(0 0 7px #ffc54d)}to{transform:rotate(7deg) scale(1.05);filter:drop-shadow(0 0 14px #ffc54d)}}}
+@media(max-width:760px){.wrap{padding:20px 14px 26px}.hero{padding:24px 0 18px}.festive-art{height:148px;gap:0}.diya.main{width:150px;height:152px}.diya.side{width:94px;height:112px}.grid{grid-template-columns:1fr;gap:16px;max-width:470px}.info-card{order:2;padding:20px}.form-card{order:1;padding:21px}.footer{margin-top:22px}.o3,.o4{display:none}}
+
 </style>
 </head>
 <body>
@@ -113,10 +126,76 @@ button:disabled{opacity:.65;cursor:wait}
       <div class="eyebrow">A festive step towards your goals</div>
       <h1>इस धनतेरस और दिवाली,<br>अपने <em>Financial Goals</em> को दें एक नई दिशा।</h1>
       <p class="lede">Explore whether stepping up your monthly SIP fits your financial goals and budget.</p>
-      <div class="festive-art" aria-hidden="true">
-        <div class="petals">✿ ✿ ✿ ✿ ✿</div><span class="coins">◉ ◉</span>
-        <div class="lamp small"></div><div class="lamp"></div><div class="lamp small"></div>
-        <span class="coins right">◉ ◉</span>
+      <div class="festive-art" aria-label="Three glowing festive diyas">
+<svg class="diya side left" viewBox="0 0 190 180" role="presentation" aria-hidden="true">
+<defs>
+ <radialGradient id="halo-0"><stop stop-color="#fff4a1" stop-opacity=".85"/><stop offset=".28" stop-color="#ffac25" stop-opacity=".42"/><stop offset="1" stop-color="#ff8a13" stop-opacity="0"/></radialGradient>
+ <linearGradient id="flame-0" x1="0" y1="1" x2=".4" y2="0"><stop stop-color="#ff7c0d"/><stop offset=".4" stop-color="#ffc438"/><stop offset=".8" stop-color="#fff4b1"/><stop offset="1" stop-color="#fffefa"/></linearGradient>
+ <linearGradient id="clay-0" x1="0" y1="0" x2=".35" y2="1"><stop stop-color="#ffcc5d"/><stop offset=".17" stop-color="#b74c15"/><stop offset=".45" stop-color="#8e300d"/><stop offset=".75" stop-color="#d66c1c"/><stop offset="1" stop-color="#63270f"/></linearGradient>
+ <linearGradient id="rim-0" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff0a4"/><stop offset=".35" stop-color="#f9a62e"/><stop offset="1" stop-color="#7d290d"/></linearGradient>
+ <radialGradient id="oil-0"><stop stop-color="#ffba37"/><stop offset=".5" stop-color="#ae470d"/><stop offset="1" stop-color="#49200f"/></radialGradient>
+ <filter id="glow-0" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<ellipse class="light-reflection" cx="95" cy="163" rx="77" ry="10" fill="#ffa42c" opacity=".25" filter="url(#glow-0)"/>
+<circle class="flame-halo" cx="95" cy="58" r="65" fill="url(#halo-0)"/>
+<ellipse cx="95" cy="66" rx="17" ry="34" fill="#ffb22a" opacity=".65" filter="url(#glow-0)"/>
+<path class="flame-outer" d="M95 88 C72 66 88 43 94 27 C98 43 117 60 102 86 Q98 92 95 88Z" fill="url(#flame-0)"/>
+<path class="flame-inner" d="M95 86 C86 72 92 59 97 49 C99 61 106 73 99 85Z" fill="#fff8d6"/>
+<path d="M95 97 Q95 89 96 83" fill="none" stroke="#2a160e" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M19 109 Q95 132 171 109 C161 143 142 161 95 164 C49 161 29 143 19 109Z" fill="url(#clay-0)" stroke="#f8a43b" stroke-width="1.8"/>
+<ellipse cx="95" cy="109" rx="77" ry="16" fill="url(#rim-0)"/>
+<ellipse cx="95" cy="108" rx="67" ry="10" fill="url(#oil-0)" stroke="#ffe0a0" stroke-width="1.8"/>
+<path d="M31 115 Q95 132 159 115" fill="none" stroke="#ffce64" stroke-width="2.5" opacity=".9"/>
+<path d="M45 135 Q95 151 145 135" fill="none" stroke="#eaa342" stroke-width="1.4" opacity=".7"/>
+<g fill="none" stroke="#ffc565" stroke-width="1.6" opacity=".92"><path d="M61 133 l8 -7 8 7 -8 7Z M87 139 l8 -8 8 8 -8 8Z M113 133 l8 -7 8 7 -8 7Z"/><path d="M41 128 q7 7 14 0 M135 128 q7 7 14 0"/></g>
+<ellipse cx="95" cy="158" rx="40" ry="3" fill="#ffbf58" opacity=".28"/>
+</svg>
+<svg class="diya main" viewBox="0 0 190 180" role="presentation" aria-hidden="true">
+<defs>
+ <radialGradient id="halo-1"><stop stop-color="#fff4a1" stop-opacity=".85"/><stop offset=".28" stop-color="#ffac25" stop-opacity=".42"/><stop offset="1" stop-color="#ff8a13" stop-opacity="0"/></radialGradient>
+ <linearGradient id="flame-1" x1="0" y1="1" x2=".4" y2="0"><stop stop-color="#ff7c0d"/><stop offset=".4" stop-color="#ffc438"/><stop offset=".8" stop-color="#fff4b1"/><stop offset="1" stop-color="#fffefa"/></linearGradient>
+ <linearGradient id="clay-1" x1="0" y1="0" x2=".35" y2="1"><stop stop-color="#ffcc5d"/><stop offset=".17" stop-color="#b74c15"/><stop offset=".45" stop-color="#8e300d"/><stop offset=".75" stop-color="#d66c1c"/><stop offset="1" stop-color="#63270f"/></linearGradient>
+ <linearGradient id="rim-1" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff0a4"/><stop offset=".35" stop-color="#f9a62e"/><stop offset="1" stop-color="#7d290d"/></linearGradient>
+ <radialGradient id="oil-1"><stop stop-color="#ffba37"/><stop offset=".5" stop-color="#ae470d"/><stop offset="1" stop-color="#49200f"/></radialGradient>
+ <filter id="glow-1" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<ellipse class="light-reflection" cx="95" cy="163" rx="77" ry="10" fill="#ffa42c" opacity=".25" filter="url(#glow-1)"/>
+<circle class="flame-halo" cx="95" cy="58" r="65" fill="url(#halo-1)"/>
+<ellipse cx="95" cy="66" rx="17" ry="34" fill="#ffb22a" opacity=".65" filter="url(#glow-1)"/>
+<path class="flame-outer" d="M95 88 C72 66 88 43 94 27 C98 43 117 60 102 86 Q98 92 95 88Z" fill="url(#flame-1)"/>
+<path class="flame-inner" d="M95 86 C86 72 92 59 97 49 C99 61 106 73 99 85Z" fill="#fff8d6"/>
+<path d="M95 97 Q95 89 96 83" fill="none" stroke="#2a160e" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M19 109 Q95 132 171 109 C161 143 142 161 95 164 C49 161 29 143 19 109Z" fill="url(#clay-1)" stroke="#f8a43b" stroke-width="1.8"/>
+<ellipse cx="95" cy="109" rx="77" ry="16" fill="url(#rim-1)"/>
+<ellipse cx="95" cy="108" rx="67" ry="10" fill="url(#oil-1)" stroke="#ffe0a0" stroke-width="1.8"/>
+<path d="M31 115 Q95 132 159 115" fill="none" stroke="#ffce64" stroke-width="2.5" opacity=".9"/>
+<path d="M45 135 Q95 151 145 135" fill="none" stroke="#eaa342" stroke-width="1.4" opacity=".7"/>
+<g fill="none" stroke="#ffc565" stroke-width="1.6" opacity=".92"><path d="M61 133 l8 -7 8 7 -8 7Z M87 139 l8 -8 8 8 -8 8Z M113 133 l8 -7 8 7 -8 7Z"/><path d="M41 128 q7 7 14 0 M135 128 q7 7 14 0"/></g>
+<ellipse cx="95" cy="158" rx="40" ry="3" fill="#ffbf58" opacity=".28"/>
+</svg>
+<svg class="diya side right" viewBox="0 0 190 180" role="presentation" aria-hidden="true">
+<defs>
+ <radialGradient id="halo-2"><stop stop-color="#fff4a1" stop-opacity=".85"/><stop offset=".28" stop-color="#ffac25" stop-opacity=".42"/><stop offset="1" stop-color="#ff8a13" stop-opacity="0"/></radialGradient>
+ <linearGradient id="flame-2" x1="0" y1="1" x2=".4" y2="0"><stop stop-color="#ff7c0d"/><stop offset=".4" stop-color="#ffc438"/><stop offset=".8" stop-color="#fff4b1"/><stop offset="1" stop-color="#fffefa"/></linearGradient>
+ <linearGradient id="clay-2" x1="0" y1="0" x2=".35" y2="1"><stop stop-color="#ffcc5d"/><stop offset=".17" stop-color="#b74c15"/><stop offset=".45" stop-color="#8e300d"/><stop offset=".75" stop-color="#d66c1c"/><stop offset="1" stop-color="#63270f"/></linearGradient>
+ <linearGradient id="rim-2" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fff0a4"/><stop offset=".35" stop-color="#f9a62e"/><stop offset="1" stop-color="#7d290d"/></linearGradient>
+ <radialGradient id="oil-2"><stop stop-color="#ffba37"/><stop offset=".5" stop-color="#ae470d"/><stop offset="1" stop-color="#49200f"/></radialGradient>
+ <filter id="glow-2" x="-150%" y="-150%" width="400%" height="400%"><feGaussianBlur stdDeviation="7"/></filter>
+</defs>
+<ellipse class="light-reflection" cx="95" cy="163" rx="77" ry="10" fill="#ffa42c" opacity=".25" filter="url(#glow-2)"/>
+<circle class="flame-halo" cx="95" cy="58" r="65" fill="url(#halo-2)"/>
+<ellipse cx="95" cy="66" rx="17" ry="34" fill="#ffb22a" opacity=".65" filter="url(#glow-2)"/>
+<path class="flame-outer" d="M95 88 C72 66 88 43 94 27 C98 43 117 60 102 86 Q98 92 95 88Z" fill="url(#flame-2)"/>
+<path class="flame-inner" d="M95 86 C86 72 92 59 97 49 C99 61 106 73 99 85Z" fill="#fff8d6"/>
+<path d="M95 97 Q95 89 96 83" fill="none" stroke="#2a160e" stroke-width="2.6" stroke-linecap="round"/>
+<path d="M19 109 Q95 132 171 109 C161 143 142 161 95 164 C49 161 29 143 19 109Z" fill="url(#clay-2)" stroke="#f8a43b" stroke-width="1.8"/>
+<ellipse cx="95" cy="109" rx="77" ry="16" fill="url(#rim-2)"/>
+<ellipse cx="95" cy="108" rx="67" ry="10" fill="url(#oil-2)" stroke="#ffe0a0" stroke-width="1.8"/>
+<path d="M31 115 Q95 132 159 115" fill="none" stroke="#ffce64" stroke-width="2.5" opacity=".9"/>
+<path d="M45 135 Q95 151 145 135" fill="none" stroke="#eaa342" stroke-width="1.4" opacity=".7"/>
+<g fill="none" stroke="#ffc565" stroke-width="1.6" opacity=".92"><path d="M61 133 l8 -7 8 7 -8 7Z M87 139 l8 -8 8 8 -8 8Z M113 133 l8 -7 8 7 -8 7Z"/><path d="M41 128 q7 7 14 0 M135 128 q7 7 14 0"/></g>
+<ellipse cx="95" cy="158" rx="40" ry="3" fill="#ffbf58" opacity=".28"/>
+</svg>
       </div>
     </header>
     <section class="grid">
@@ -142,6 +221,12 @@ button:disabled{opacity:.65;cursor:wait}
               <label class="amount"><input type="radio" name="amount" value="11000"><span>₹11,000 / month</span></label>
               <label class="amount"><input type="radio" name="amount" value="21000"><span>₹21,000 / month</span></label>
               <label class="amount"><input type="radio" name="amount" value="51000"><span>₹51,000 / month</span></label>
+              <label class="amount custom-amount-option"><input type="radio" name="amount" value="custom"><span>✦ Enter Custom Amount</span></label>
+            </div>
+            <div id="custom-amount-wrap" class="custom-amount-wrap" hidden>
+              <label class="field-label" for="custom-amount" style="margin-top:0">Your preferred monthly amount (₹)</label>
+              <input id="custom-amount" type="number" inputmode="numeric" min="500" max="1000000" step="1" placeholder="e.g. 7500" aria-describedby="custom-amount-hint">
+              <small id="custom-amount-hint" class="custom-hint">Enter an amount between ₹500 and ₹10,00,000.</small>
             </div>
             <div id="form-details" class="form-details" hidden>
             <label class="field-label" for="name">Name</label>
@@ -176,10 +261,16 @@ const form = document.getElementById("enquiry-form");
 const formDetails = document.getElementById("form-details");
 const statusBox = document.getElementById("status");
 const submitBtn = document.getElementById("submit-btn");
+const customAmountWrap = document.getElementById("custom-amount-wrap");
+const customAmountInput = document.getElementById("custom-amount");
 
 // Reveal the contact fields only after a monthly amount is selected.
 form.querySelectorAll('input[name="amount"]').forEach((radio) => {
   radio.addEventListener("change", () => {
+    const isCustom = radio.value === "custom";
+    customAmountWrap.hidden = !isCustom;
+    customAmountInput.required = isCustom;
+    if (!isCustom) customAmountInput.value = "";
     formDetails.hidden = false;
     statusBox.className = "status";
     statusBox.textContent = "";
@@ -195,7 +286,10 @@ form.addEventListener("submit", async (event) => {
 
   const name = document.getElementById("name").value.trim();
   const mobile = document.getElementById("mobile").value.replace(/[\s-]/g, "");
-  const amount = Number(new FormData(form).get("amount"));
+  const selectedAmount = new FormData(form).get("amount");
+  const amount = selectedAmount === "custom"
+    ? Number(customAmountInput.value)
+    : Number(selectedAmount);
   const consent = document.getElementById("consent").checked;
 
   if (!name || name.length > 100)
@@ -204,8 +298,14 @@ form.addEventListener("submit", async (event) => {
   if (!/^[6-9]\d{9}$/.test(mobile))
     return showStatus("Please enter a valid 10-digit Indian mobile number.", "error");
 
-  if (![5100, 11000, 21000, 51000].includes(amount))
-    return showStatus("Please choose one of the listed monthly amounts.", "error");
+  if (!selectedAmount)
+    return showStatus("Please select a monthly amount.", "error");
+
+  if (selectedAmount === "custom" && !customAmountInput.value.trim())
+    return showStatus("Please enter your custom monthly amount.", "error");
+
+  if (!Number.isInteger(amount) || amount < 500 || amount > 1000000)
+    return showStatus("Please enter a whole amount between ₹500 and ₹10,00,000.", "error");
 
   if (!consent)
     return showStatus("Please provide consent before submitting.", "error");
@@ -243,6 +343,11 @@ form.addEventListener("submit", async (event) => {
     document.getElementById("name").value = "";
     document.getElementById("mobile").value = "";
     document.getElementById("consent").checked = false;
+    form.querySelectorAll('input[name="amount"]').forEach(radio => radio.checked = false);
+    customAmountInput.value = "";
+    customAmountInput.required = false;
+    customAmountWrap.hidden = true;
+    formDetails.hidden = false;
 
   } catch (error) {
     console.error("Enquiry submission failed:", error);
